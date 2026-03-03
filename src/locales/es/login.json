@@ -1,0 +1,12 @@
+{
+  "welcome": "Bienvenido a ft_transcendence",
+  "subtitle": "Transformando leads en <highlight>crecimiento real</highlight>.",
+  "emailLabel": "Correo electrónico",
+  "passwordLabel": "Contraseña",
+  "loginButton": "Ingresar a la Plataforma →",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "orContinueWith": "o continúa con",
+  "registerPrompt": "¿Aún no tienes una cuenta?",
+  "registerLink": "Crear cuenta",
+  "invalidCredentials": "Correo o contraseña inválidos"
+}

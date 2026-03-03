@@ -1,22 +1,62 @@
+/**
+ * globals.css
+ *
+ * Global stylesheet for the application.
+ *
+ * Responsibilities:
+ * - Load Tailwind layers (base/components/utilities).
+ * - Define global design tokens via CSS variables (colors, radius).
+ * - Apply minimal global defaults (body styles, link styles, focus ring).
+ * - Provide custom utility classes/animations used by the design system
+ *   (ripple effect, animated gradient borders, neon backlight, hue shifting).
+ */
+
+/* Tailwind layers:
+   - base: preflight + base styles
+   - components: component classes (if you define any)
+   - utilities: Tailwind utility classes
+*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Global design tokens (CSS variables).
+   These can be reused anywhere via var(--token-name). */
 :root {
+  /* Border radius token used across UI components */
   --radius-md: 10px;
 
-  --color-primary: #1D4ED8;
-  --color-highlight: #7C3AED;
-  --color-conversion: #F97316;
-  --color-bg: #F3F4F6;
-  --color-text: #1F2937;
+  /* Brand / semantic colors (custom tokens) */
+  --color-primary: #1D4ED8;      /* Blue */
+  --color-highlight: #7C3AED;    /* Purple */
+  --color-conversion: #F97316;   /* Orange (CTA / accent) */
+
+  /* Base theme colors */
+  --color-bg: #F3F4F6;           /* Light gray background */
+  --color-text: #1F2937;         /* Dark gray text */
 }
 
+/* Default page styling */
 body {
   background-color: var(--color-bg);
+  color: var(--color-text);
   font-family: system-ui, sans-serif;
 }
 
+/* Keep links visually clean.
+   Note: you intentionally do NOT force color: inherit; (good for clarity). */
+a {
+  text-decoration: none;
+}
+
+/* Accessibility: visible focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid rgba(249, 115, 22, 0.6);
+  outline-offset: 2px;
+}
+
+/* Ripple effect helper:
+   Used by a button (or any clickable) that creates a span.ripple at click position. */
 .ripple {
   position: absolute;
   border-radius: 9999px;
@@ -26,6 +66,7 @@ body {
   pointer-events: none;
 }
 
+/* Ripple animation: grows and fades */
 @keyframes ripple-effect {
   to {
     transform: scale(4);
@@ -33,29 +74,72 @@ body {
   }
 }
 
-@keyframes borderMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-border {
-  animation: borderMove 6s ease infinite;
-}
-
+/* Animated gradient border:
+   Moves the background gradient positions to create a "flowing" border look. */
 @keyframes borderAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .animate-border {
   background-size: 300% 300%;
   animation: borderAnimation 6s ease infinite;
+}
+
+/* Auth provider icon sizing:
+   Forces consistent 20x20 icons (Google, Microsoft, etc) even if SVG defaults differ. */
+.auth-icon {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+  flex: 0 0 20px !important;
+  display: block !important;
+}
+
+/* Neon backlight movement:
+   Used for subtle drifting "light blob" motion in backgrounds. */
+@keyframes neonBacklightMove {
+  0% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 4%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-6%, -4%, 0) scale(1);
+  }
+}
+
+.animate-neon-backlight {
+  animation: neonBacklightMove 7s ease-in-out infinite;
+}
+
+/* Neon border movement:
+   Similar to borderAnimation, but kept separate in case you want different tuning. */
+@keyframes neonBorderMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Slow color shift:
+   Hue rotation makes the same gradient feel "alive" without changing stops. */
+@keyframes neonHueShift {
+  0%   { filter: hue-rotate(0deg) saturate(1.15); }
+  50%  { filter: hue-rotate(35deg) saturate(1.2); }
+  100% { filter: hue-rotate(0deg) saturate(1.15); }
+}
+
+/* Neon border utility:
+   - Moves gradient position (neonBorderMove)
+   - Also shifts hue over time (neonHueShift) for gradual color variation */
+.animate-neon-border {
+  animation: neonBorderMove 6s ease infinite, neonHueShift 10s ease-in-out infinite;
+}
+
+/* Optional utility if you ever want ONLY hue shifting (no movement). */
+.animate-neon-hue {
+  animation: neonHueShift 10s ease-in-out infinite;
 }

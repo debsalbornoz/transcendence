@@ -1,122 +1,100 @@
+/**
+ * RegisterForm
+ *
+ * Client-side user registration form UI.
+ *
+ * Features:
+ * - Fully internationalized using next-intl.
+ * - Built with reusable design system components (Card, AuthInput, Button).
+ * - Provides structured input fields for name, email, password,
+ *   and password confirmation.
+ * - Includes navigation link to the login page.
+ *
+ * Currently serves as a visual foundation for the registration flow
+ * and will be extended with validation and backend integration
+ * in future iterations.
+ */
+
 "use client"
 
 import Link from "next/link"
+import { useTranslations } from "next-intl"
+
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AuthInput } from "@/components/ui/auth-input"
 
 export function RegisterForm() {
+  const t = useTranslations("register")
+
   return (
-    <Card padding="lg" className="w-full max-w-xl space-y-6">
-
-      {/* Header */}
-      <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-semibold text-white">
-          Crie sua conta
-        </h1>
-        <p className="text-sm text-gray-400">
-          Comece agora mesmo na plataforma.
-        </p>
-      </div>
-
-      {/* Inputs */}
-      <div className="space-y-5">
-        <AuthInput
-          label="Nome"
-          type="text"
-          placeholder="Seu nome"
-        />
-
-        <AuthInput
-          label="E-mail"
-          type="email"
-          placeholder="seu@email.com"
-        />
-
-        <AuthInput
-          label="Senha"
-          type="password"
-          placeholder="••••••••"
-          focusColor="orange"
-        />
-      </div>
-
-      {/* Main Button */}
-      <Button className="w-full">
-        Criar Conta →
-      </Button>
-
-      {/* Divider */}
-      <div className="relative flex items-center justify-center my-2">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-white/10" />
+    <Card
+      padding="lg"
+      className="
+        w-full max-w-xl md:max-w-2xl
+        bg-[#0E1325]/90 backdrop-blur-md
+        border border-white/10
+        rounded-2xl
+        shadow-[0_0_60px_rgba(0,0,0,0.6)]
+        px-10 py-10
+      "
+    >
+      <div className="flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex flex-col gap-2 text-center">
+          <h1 className="text-2xl font-semibold text-white">
+            {t("title")}
+          </h1>
+          <p className="text-base text-gray-400">
+            {t("subtitle")}
+          </p>
         </div>
-        <span className="relative bg-[#0E1325] px-4 text-sm text-gray-400">
-          ou continue com
-        </span>
-      </div>
 
-      {/* Social Buttons */}
-      <div className="space-y-3">
+        {/* Inputs */}
+        <div className="flex flex-col gap-4">
+          <AuthInput
+            label={t("nameLabel")}
+            type="text"
+            placeholder={t("namePlaceholder")}
+          />
 
-        {/* Google Button */}
-        <button
-          type="button"
-          className="w-full h-11 flex items-center justify-center gap-3 rounded-xl 
-                     bg-[#111827] border border-white/10 text-white font-medium
-                     transition-all duration-300
-                     hover:border-blue-500/40
-                     hover:shadow-[0_0_25px_rgba(59,130,246,0.35)]
-                     hover:-translate-y-0.5"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 48 48"
-            className="w-5 h-5"
+          <AuthInput
+            label={t("emailLabel")}
+            type="email"
+            placeholder={t("emailPlaceholder")}
+          />
+
+          <AuthInput
+            label={t("passwordLabel")}
+            type="password"
+            placeholder="••••••••"
+            focusColor="orange"
+          />
+
+          <AuthInput
+            label={t("confirmPasswordLabel")}
+            type="password"
+            placeholder="••••••••"
+            focusColor="orange"
+          />
+        </div>
+
+        {/* Main Button */}
+        <Button className="w-full h-12 text-sm">
+          {t("registerButton")}
+        </Button>
+
+        {/* Login Redirect */}
+        <div className="text-center text-sm text-gray-400">
+          {t("alreadyHaveAccount")}{" "}
+          <Link
+            href="/login"
+            className="text-purple-400 hover:text-purple-300 transition"
           >
-            <path fill="#FFC107" d="M43.611 20.083h-1.611V20H24v8h11.303c-1.64 4.657-6.087 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.958 3.042l5.657-5.657C34.463 6.053 29.507 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.651-.389-3.917z"/>
-            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 16.108 18.961 13 24 13c3.059 0 5.842 1.154 7.958 3.042l5.657-5.657C34.463 6.053 29.507 4 24 4c-7.732 0-14.41 4.388-17.694 10.691z"/>
-            <path fill="#4CAF50" d="M24 44c5.414 0 10.249-2.072 13.889-5.444l-6.408-5.416C29.447 34.929 26.856 36 24 36c-5.196 0-9.623-3.317-11.276-7.946l-6.544 5.036C9.437 39.556 16.178 44 24 44z"/>
-            <path fill="#1976D2" d="M43.611 20.083h-1.611V20H24v8h11.303c-.79 2.244-2.231 4.166-4.105 5.545l6.408 5.416C39.721 35.443 44 30.253 44 24c0-1.341-.138-2.651-.389-3.917z"/>
-          </svg>
-          Google
-        </button>
-
-        {/* Microsoft Button */}
-        <button
-          type="button"
-          className="w-full h-11 flex items-center justify-center gap-3 rounded-xl 
-                     bg-[#111827] border border-white/10 text-white font-medium
-                     transition-all duration-300
-                     hover:border-purple-500/40
-                     hover:shadow-[0_0_25px_rgba(168,85,247,0.35)]
-                     hover:-translate-y-0.5"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            className="w-5 h-5"
-          >
-            <rect width="10" height="10" x="1" y="1" fill="#F25022" />
-            <rect width="10" height="10" x="13" y="1" fill="#7FBA00" />
-            <rect width="10" height="10" x="1" y="13" fill="#00A4EF" />
-            <rect width="10" height="10" x="13" y="13" fill="#FFB900" />
-          </svg>
-          Microsoft
-        </button>
+            {t("loginLink")}
+          </Link>
+        </div>
       </div>
-
-      {/* Login Redirect */}
-      <div className="text-center text-sm text-gray-400">
-        Já tem conta?{" "}
-        <Link
-          href="/login"
-          className="text-purple-400 hover:text-purple-300 transition"
-        >
-          Entrar
-        </Link>
-      </div>
-
     </Card>
   )
 }

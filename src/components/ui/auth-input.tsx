@@ -1,3 +1,18 @@
+/**
+ * AuthInput
+ *
+ * Reusable input component designed for authentication forms.
+ *
+ * Features:
+ * - Displays a label above the input field.
+ * - Supports customizable focus ring color (blue or orange).
+ * - Extends native HTML input attributes for flexibility.
+ * - Applies consistent dark-themed styling aligned with the design system.
+ *
+ * Intended for use in login, registration, and password-related forms
+ * to maintain visual and behavioral consistency across auth flows.
+ */
+
 "use client"
 
 type AuthInputProps = {

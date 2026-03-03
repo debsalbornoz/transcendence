@@ -1,0 +1,14 @@
+{
+  "title": "Crie sua conta",
+  "subtitle": "Comece agora mesmo na plataforma.",
+  "nameLabel": "Nome",
+  "namePlaceholder": "Seu nome",
+  "emailLabel": "E-mail",
+  "emailPlaceholder": "seu@email.com",
+  "passwordLabel": "Senha",
+  "confirmPasswordLabel": "Confirmar senha",
+  "registerButton": "Criar conta →",
+  "orContinueWith": "ou continue com",
+  "alreadyHaveAccount": "Já tem conta?",
+  "loginLink": "Entrar"
+}

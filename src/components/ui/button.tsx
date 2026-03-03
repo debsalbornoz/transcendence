@@ -1,3 +1,23 @@
+/**
+ * Button
+ *
+ * Reusable and highly customizable button component built with
+ * class-variance-authority (CVA) for scalable variant management.
+ *
+ * Features:
+ * - Supports multiple visual variants (primary, secondary, outline,
+ *   ghost, danger).
+ * - Provides size options (sm, md, lg) and optional fullWidth mode.
+ * - Includes built-in loading state with spinner indicator.
+ * - Implements a ripple click effect for enhanced user interaction.
+ * - Automatically disables interaction when loading or disabled.
+ * - Extends native HTML button attributes for flexibility.
+ *
+ * Designed as a core component of the application's design system,
+ * ensuring visual consistency, interactive feedback, and scalability
+ * across all UI actions.
+ */
+
 "use client"
 
 import * as React from "react"

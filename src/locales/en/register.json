@@ -1,0 +1,14 @@
+{
+    "title": "Create your account",
+    "subtitle": "Start using the platform now.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm password",
+    "registerButton": "Create account →",
+    "orContinueWith": "or continue with",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Sign in"
+  }

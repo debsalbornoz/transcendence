@@ -1,8 +1,17 @@
-import { NextConfig } from "next";
+// next.config.ts
+import createNextIntlPlugin from "next-intl/plugin"
 
-const nextConfig: NextConfig = {
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts")
+
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   experimental: {},
-};
 
-export default nextConfig;
+  // Fix workspace root inference warning (optional but recommended)
+  // This should point to your project root (where this next.config.ts is).
+  turbopack: {
+    root: __dirname,
+  },
+}
 
+export default withNextIntl(nextConfig)
