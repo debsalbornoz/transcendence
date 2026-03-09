@@ -8,6 +8,7 @@ import {
   findTenantLinksByUserId,
 } from "@/repositories/tenant-users.repo"
 import { findRolesForUserInTenant } from "@/repositories/user-roles.repo"
+import { findTenantById } from "@/repositories/tenants.repo"
 
 export async function getUserByEmail(email: string) {
   return findUserByEmail(email)
@@ -93,4 +94,9 @@ export async function getPermissionsForUser(params: {
   }
 
   return Array.from(permissions)
+}
+
+export async function getTenantNameById(tenantId: bigint) {
+  const tenant = await findTenantById(tenantId)
+  return tenant?.nome ?? null
 }

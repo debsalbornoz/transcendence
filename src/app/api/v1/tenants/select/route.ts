@@ -4,6 +4,7 @@ import { requireAuth } from "@/lib/authz"
 import {
   getPermissionsForUser,
   getRolesForUserInTenant,
+  getTenantNameById,
   userHasAccessToTenant,
 } from "@/services/auth/rbac"
 
@@ -47,9 +48,12 @@ export async function POST(req: Request) {
       tenantId: tenantIdBigInt,
     })
 
+    const tenantName = await getTenantNameById(tenantIdBigInt)
+
     return NextResponse.json(
       {
         tenantId,
+        tenantName,
         permissions,
         roles: roles.map((role) => role.name),
       },

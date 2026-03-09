@@ -40,3 +40,15 @@ export async function createTenantUser(params: {
     },
   })
 }
+
+export async function deleteTenantUser(params: {
+  userId: bigint
+  tenantId: bigint
+}) {
+  return prisma.tenantUsers.deleteMany({
+    where: {
+      user_id: params.userId,
+      tenant_id: params.tenantId,
+    },
+  })
+}

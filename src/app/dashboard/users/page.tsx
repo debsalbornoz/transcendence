@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AuthInput } from "@/components/ui/auth-input"
 import { PermissionGuard } from "@/components/ui/permission-guard"
+import { useToast } from "@/components/ui/toast"
 
 type TenantUser = {
   tenant_user_id: string
@@ -17,11 +18,18 @@ type TenantUser = {
     name: string | null
     status: string
   }
+  role: {
+    role_id: string
+    name: string
+    description: string | null
+  } | null
 }
 
 type RoleOption = "Admin" | "User"
 
 export default function DashboardUsersPage() {
+  const { push } = useToast()
+
   const [users, setUsers] = useState<TenantUser[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -29,7 +37,11 @@ export default function DashboardUsersPage() {
   const [email, setEmail] = useState("")
   const [roleName, setRoleName] = useState<RoleOption>("User")
   const [submitting, setSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState<string | null>(null)
+
+  const [actionLoadingUserId, setActionLoadingUserId] = useState<string | null>(null)
+
+  const [userToRemove, setUserToRemove] = useState<TenantUser | null>(null)
+  const [removingUser, setRemovingUser] = useState(false)
 
   async function loadUsers() {
     try {
@@ -65,7 +77,6 @@ export default function DashboardUsersPage() {
   async function handleAddUser() {
     try {
       setSubmitting(true)
-      setSubmitMessage(null)
       setError(null)
 
       const res = await fetch("/api/v1/admin/users/add", {
@@ -82,20 +93,168 @@ export default function DashboardUsersPage() {
       const data = await res.json().catch(() => null)
 
       if (!res.ok) {
-        setSubmitMessage(data?.error || "Não foi possível adicionar o usuário.")
+        push({
+          title: "Erro ao adicionar usuário",
+          message: data?.error || "Não foi possível adicionar o usuário.",
+          variant: "danger",
+          durationMs: 4000,
+        })
         return
       }
 
-      setSubmitMessage("Usuário adicionado à empresa com sucesso.")
+      if (data?.action === "created-role") {
+        push({
+          title: "Usuário adicionado",
+          message: "Usuário adicionado à empresa com sucesso.",
+          variant: "success",
+          durationMs: 3000,
+        })
+      } else if (data?.action === "replaced-role") {
+        push({
+          title: "Papel atualizado",
+          message: "O usuário já existia na empresa e o papel foi atualizado.",
+          variant: "info",
+          durationMs: 3500,
+        })
+      } else if (data?.action === "unchanged") {
+        push({
+          title: "Nenhuma alteração",
+          message: "O usuário já pertence à empresa com esse papel.",
+          variant: "neutral",
+          durationMs: 3000,
+        })
+      } else {
+        push({
+          title: "Sucesso",
+          message: "Operação realizada com sucesso.",
+          variant: "success",
+          durationMs: 3000,
+        })
+      }
+
       setEmail("")
       setRoleName("User")
       await loadUsers()
     } catch (err) {
       console.error(err)
-      setSubmitMessage("Erro inesperado ao adicionar usuário.")
+      push({
+        title: "Erro inesperado",
+        message: "Ocorreu um erro inesperado ao adicionar o usuário.",
+        variant: "danger",
+        durationMs: 4000,
+      })
     } finally {
       setSubmitting(false)
     }
+  }
+
+  async function handleChangeRole(userId: string, newRole: RoleOption) {
+    try {
+      setActionLoadingUserId(userId)
+
+      const res = await fetch(`/api/v1/admin/users/${userId}/role`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          roleName: newRole,
+        }),
+      })
+
+      const data = await res.json().catch(() => null)
+
+      if (!res.ok) {
+        push({
+          title: "Erro ao alterar papel",
+          message: data?.error || "Não foi possível alterar o papel.",
+          variant: "danger",
+          durationMs: 4000,
+        })
+        return
+      }
+
+      if (data?.action === "unchanged") {
+        push({
+          title: "Nenhuma alteração",
+          message: "O usuário já possui esse papel.",
+          variant: "neutral",
+          durationMs: 3000,
+        })
+      } else {
+        push({
+          title: "Papel atualizado",
+          message: "Papel atualizado com sucesso.",
+          variant: "success",
+          durationMs: 3000,
+        })
+      }
+
+      await loadUsers()
+    } catch (err) {
+      console.error(err)
+      push({
+        title: "Erro inesperado",
+        message: "Ocorreu um erro inesperado ao alterar o papel.",
+        variant: "danger",
+        durationMs: 4000,
+      })
+    } finally {
+      setActionLoadingUserId(null)
+    }
+  }
+
+  async function confirmRemoveUser() {
+    if (!userToRemove) return
+
+    try {
+      setRemovingUser(true)
+
+      const res = await fetch(`/api/v1/admin/users/${userToRemove.user.user_id}`, {
+        method: "DELETE",
+      })
+
+      const data = await res.json().catch(() => null)
+
+      if (!res.ok) {
+        push({
+          title: "Erro ao remover usuário",
+          message: data?.error || "Não foi possível remover o usuário.",
+          variant: "danger",
+          durationMs: 4000,
+        })
+        return
+      }
+
+      push({
+        title: "Usuário removido",
+        message: "Usuário removido da empresa com sucesso.",
+        variant: "success",
+        durationMs: 3000,
+      })
+
+      setUserToRemove(null)
+      await loadUsers()
+    } catch (err) {
+      console.error(err)
+      push({
+        title: "Erro inesperado",
+        message: "Ocorreu um erro inesperado ao remover o usuário.",
+        variant: "danger",
+        durationMs: 4000,
+      })
+    } finally {
+      setRemovingUser(false)
+    }
+  }
+
+  function openRemoveModal(user: TenantUser) {
+    setUserToRemove(user)
+  }
+
+  function closeRemoveModal() {
+    if (removingUser) return
+    setUserToRemove(null)
   }
 
   return (
@@ -124,7 +283,7 @@ export default function DashboardUsersPage() {
             <div>
               <h1 className="text-3xl font-semibold">Usuários da empresa</h1>
               <p className="mt-2 text-sm text-gray-400">
-                Área administrativa para visualizar e adicionar usuários já cadastrados à empresa ativa.
+                Área administrativa para visualizar e gerenciar usuários da empresa ativa.
               </p>
             </div>
 
@@ -178,12 +337,6 @@ export default function DashboardUsersPage() {
                 Adicionar
               </Button>
             </div>
-
-            {submitMessage && (
-              <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-200">
-                {submitMessage}
-              </div>
-            )}
           </Card>
 
           <Card padding="lg" className="space-y-6">
@@ -221,36 +374,124 @@ export default function DashboardUsersPage() {
                     <tr>
                       <th className="px-4 py-3 font-medium">Nome</th>
                       <th className="px-4 py-3 font-medium">E-mail</th>
-                      <th className="px-4 py-3 font-medium">Status do usuário</th>
-                      <th className="px-4 py-3 font-medium">Vínculo</th>
+                      <th className="px-4 py-3 font-medium">Role</th>
+                      <th className="px-4 py-3 font-medium">Status usuário</th>
+                      <th className="px-4 py-3 font-medium">Remover</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((item) => (
-                      <tr
-                        key={item.tenant_user_id}
-                        className="border-b border-white/5 last:border-b-0"
-                      >
-                        <td className="px-4 py-3 text-white">
-                          {item.user.name || "Sem nome"}
-                        </td>
-                        <td className="px-4 py-3 text-gray-300">
-                          {item.user.email}
-                        </td>
-                        <td className="px-4 py-3 text-gray-300">
-                          {item.user.status}
-                        </td>
-                        <td className="px-4 py-3 text-gray-300">
-                          {item.status}
-                        </td>
-                      </tr>
-                    ))}
+                    {users.map((item) => {
+                      const currentRole: RoleOption =
+                        item.role?.name === "Admin" ? "Admin" : "User"
+                      const isLoading = actionLoadingUserId === item.user.user_id
+
+                      return (
+                        <tr
+                          key={item.tenant_user_id}
+                          className="border-b border-white/5 last:border-b-0"
+                        >
+                          <td className="px-4 py-3 text-white">
+                            {item.user.name || "Sem nome"}
+                          </td>
+                          <td className="px-4 py-3 text-gray-300">
+                            {item.user.email}
+                          </td>
+                          <td className="px-4 py-3">
+                            <select
+                              value={currentRole}
+                              onChange={(e) =>
+                                handleChangeRole(
+                                  item.user.user_id,
+                                  e.target.value as RoleOption
+                                )
+                              }
+                              disabled={isLoading || removingUser}
+                              className="h-9 min-w-[140px] rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white outline-none"
+                            >
+                              <option value="User" className="text-black">
+                                User
+                              </option>
+                              <option value="Admin" className="text-black">
+                                Admin
+                              </option>
+                            </select>
+                          </td>
+                          <td className="px-4 py-3 text-gray-300">
+                            {item.user.status}
+                          </td>
+                          <td className="px-4 py-3">
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              disabled={isLoading || removingUser}
+                              onClick={() => openRemoveModal(item)}
+                            >
+                              Remover
+                            </Button>
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
             )}
           </Card>
         </div>
+
+        {userToRemove && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+            <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0E1325] p-6 shadow-2xl">
+              <div className="space-y-3">
+                <h2 className="text-xl font-semibold text-white">
+                  Confirmar remoção
+                </h2>
+
+                <p className="text-sm text-gray-300">
+                  Tem certeza que deseja remover este usuário da empresa ativa?
+                </p>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-gray-300">
+                  <p>
+                    <span className="font-medium text-white">Nome:</span>{" "}
+                    {userToRemove.user.name || "Sem nome"}
+                  </p>
+                  <p className="mt-1">
+                    <span className="font-medium text-white">E-mail:</span>{" "}
+                    {userToRemove.user.email}
+                  </p>
+                  <p className="mt-1">
+                    <span className="font-medium text-white">Role atual:</span>{" "}
+                    {userToRemove.role?.name || "Sem role"}
+                  </p>
+                </div>
+
+                <p className="text-xs text-gray-400">
+                  Essa ação remove o vínculo do usuário com a empresa e também o papel associado nesse tenant.
+                </p>
+              </div>
+
+              <div className="mt-6 flex justify-end gap-3">
+                <Button
+                  variant="outline"
+                  onClick={closeRemoveModal}
+                  disabled={removingUser}
+                >
+                  Cancelar
+                </Button>
+
+                <Button
+                  variant="danger"
+                  onClick={confirmRemoveUser}
+                  loading={removingUser}
+                  disabled={removingUser}
+                >
+                  Confirmar remoção
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </PermissionGuard>
   )

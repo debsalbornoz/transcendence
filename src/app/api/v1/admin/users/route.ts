@@ -21,6 +21,7 @@ export async function GET(req: Request) {
       select: {
         tenant_user_id: true,
         status: true,
+        user_id: true,
         Users: {
           select: {
             user_id: true,
@@ -35,6 +36,37 @@ export async function GET(req: Request) {
       },
     })
 
+    const userIds = users.map((item) => item.user_id)
+
+    const userRoles = await prisma.userRoles.findMany({
+      where: {
+        tenant_id: tenantId,
+        user_id: {
+          in: userIds,
+        },
+      },
+      select: {
+        user_id: true,
+        Roles: {
+          select: {
+            role_id: true,
+            name: true,
+            description: true,
+          },
+        },
+      },
+    })
+
+    const roleMap = new Map<string, { role_id: string; name: string; description: string | null }>()
+
+    for (const item of userRoles) {
+      roleMap.set(item.user_id.toString(), {
+        role_id: item.Roles.role_id.toString(),
+        name: item.Roles.name,
+        description: item.Roles.description,
+      })
+    }
+
     return NextResponse.json(
       {
         users: users.map((item) => ({
@@ -46,6 +78,7 @@ export async function GET(req: Request) {
             name: item.Users.name,
             status: item.Users.status,
           },
+          role: roleMap.get(item.user_id.toString()) ?? null,
         })),
       },
       { status: 200 }

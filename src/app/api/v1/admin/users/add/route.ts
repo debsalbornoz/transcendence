@@ -99,15 +99,6 @@ export async function POST(req: Request) {
         {
           message: "User added to tenant successfully",
           action: "created-role",
-          user: {
-            user_id: user.user_id.toString(),
-            email: user.email,
-            name: user.name,
-          },
-          role: {
-            role_id: role.role_id.toString(),
-            name: role.name,
-          },
         },
         { status: 200 }
       )
@@ -118,15 +109,6 @@ export async function POST(req: Request) {
         {
           message: "User already belongs to this tenant with the selected role",
           action: "unchanged",
-          user: {
-            user_id: user.user_id.toString(),
-            email: user.email,
-            name: user.name,
-          },
-          role: {
-            role_id: role.role_id.toString(),
-            name: role.name,
-          },
         },
         { status: 200 }
       )
@@ -143,19 +125,6 @@ export async function POST(req: Request) {
       {
         message: "User role updated successfully",
         action: "replaced-role",
-        user: {
-          user_id: user.user_id.toString(),
-          email: user.email,
-          name: user.name,
-        },
-        previousRole: {
-          role_id: existingUserRole.role_id.toString(),
-          name: existingUserRole.Roles.name,
-        },
-        role: {
-          role_id: role.role_id.toString(),
-          name: role.name,
-        },
       },
       { status: 200 }
     )

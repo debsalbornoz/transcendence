@@ -108,3 +108,15 @@ export async function replaceUserRoleInTenant(params: {
     }),
   ])
 }
+
+export async function deleteUserRolesInTenant(params: {
+  tenantId: bigint
+  userId: bigint
+}) {
+  return prisma.userRoles.deleteMany({
+    where: {
+      tenant_id: params.tenantId,
+      user_id: params.userId,
+    },
+  })
+}

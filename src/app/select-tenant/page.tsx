@@ -87,6 +87,7 @@ export default function SelectTenantPage() {
 
       await update({
         tenantId: data.tenantId,
+        tenantName: data.tenantName,
         permissions: data.permissions,
         roles: data.roles,
       })
