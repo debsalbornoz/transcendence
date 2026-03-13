@@ -1,3 +1,51 @@
+/**
+ * User data access helpers.
+ *
+ * This module centralizes all database operations related to users.
+ * It uses Prisma to query and modify records in the users table and
+ * supports both OAuth and credentials-based authentication flows.
+ *
+ * The functions include:
+ *
+ * - findUserByEmail:
+ *   Retrieves a user by their email address.
+ *
+ * - findUserById:
+ *   Retrieves a user by their unique user_id.
+ *
+ * - createOAuthUser:
+ *   Creates a new user record when the user signs in through
+ *   an OAuth provider (Google or GitHub).
+ *
+ * - updateUserName:
+ *   Updates the name of an existing user.
+ *
+ * - updateUserEmail:
+ *   Updates the email address of an existing user.
+ *
+ * - findCredentialsUserByEmail:
+ *   Retrieves user data required for credentials authentication,
+ *   including the password hash.
+ *
+ * - createCredentialsUser:
+ *   Creates a new user with an email and password hash for
+ *   credentials-based authentication.
+ *
+ * - updateUserPasswordHash:
+ *   Updates the stored password hash when the user changes their password.
+ *
+ * - getProfileByUserId:
+ *   Retrieves profile information for a user, including authentication
+ *   data required for password updates.
+ *
+ * - deleteUserById:
+ *   Permanently removes a user from the database.
+ *
+ * These helpers act as the user repository layer and are used by
+ * authentication services, profile management, and account security
+ * features throughout the application.
+ */
+
 import { prisma } from "@/lib/prisma"
 
 export async function findUserByEmail(email: string) {

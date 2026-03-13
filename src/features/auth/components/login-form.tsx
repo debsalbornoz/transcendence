@@ -1,3 +1,24 @@
+/**
+ * Login form component.
+ *
+ * This client-side component handles user authentication using
+ * credentials or social providers.
+ *
+ * The component:
+ * - collects the user's email and password for credentials-based login
+ * - uses NextAuth's signIn function to authenticate with the "credentials" provider
+ * - checks the session after login to determine the correct post-login route
+ * - redirects users to tenant selection, no-tenant, or dashboard depending
+ *   on their tenant context
+ * - supports Google and GitHub login through OAuth providers
+ * - displays localized labels, messages, and links using next-intl
+ * - shows error feedback when authentication fails
+ * - includes navigation links for password recovery and account registration
+ *
+ * This component is responsible for starting the authentication flow
+ * and routing the user to the appropriate next step after login.
+ */
+
 "use client"
 
 import { useState } from "react"

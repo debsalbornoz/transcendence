@@ -1,3 +1,32 @@
+/**
+ * Tenant-user relationship data access helpers.
+ *
+ * This module contains database operations related to the relationship
+ * between users and tenants (companies/workspaces) in a multi-tenant system.
+ * It uses Prisma to query and manage records in the tenantUsers table.
+ *
+ * The functions include:
+ *
+ * - findTenantLinksByUserId:
+ *   Retrieves all active tenant associations for a given user,
+ *   including tenant information. Results are ordered by tenant_user_id.
+ *
+ * - findActiveTenantUser:
+ *   Finds a specific active relationship between a user and a tenant.
+ *   Useful for validating whether a user belongs to a given tenant.
+ *
+ * - createTenantUser:
+ *   Creates a new association between a user and a tenant with an
+ *   active status.
+ *
+ * - deleteTenantUser:
+ *   Removes the relationship between a user and a tenant by deleting
+ *   the corresponding records.
+ *
+ * These helpers centralize tenant membership logic and support
+ * multi-tenant authorization and workspace management.
+ */
+
 import { prisma } from "@/lib/prisma"
 
 export async function findTenantLinksByUserId(userId: bigint) {

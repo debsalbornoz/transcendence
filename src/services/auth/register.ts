@@ -1,3 +1,30 @@
+/**
+ * User registration service.
+ *
+ * This module implements the registration logic for users who create
+ * an account using email and password (credentials-based authentication).
+ *
+ * The registerUser function performs the following steps:
+ *
+ * - Validates input data:
+ *   • ensures the name is provided
+ *   • normalizes and validates the email format
+ *   • ensures the password meets the minimum length requirement
+ *
+ * - Checks if a user with the same email already exists in the database.
+ *
+ * - Hashes the password using bcrypt to securely store it.
+ *
+ * - Creates a new user record with the hashed password and active status.
+ *
+ * The function returns a standardized result object indicating whether
+ * the registration succeeded or failed, along with an error message
+ * or the created user.
+ *
+ * This service is used by the registration API endpoint to create
+ * new accounts in the system.
+ */
+
 import bcrypt from "bcryptjs"
 
 import {

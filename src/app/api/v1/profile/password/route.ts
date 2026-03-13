@@ -1,3 +1,25 @@
+/**
+ * Updates the authenticated user's password.
+ *
+ * This PATCH route allows a logged-in user to change their own password.
+ * The request must be authenticated, and the user must provide their
+ * current password along with the new password and confirmation.
+ *
+ * The route:
+ * - verifies that the request is authenticated using requireAuth
+ * - reads the current password, new password, and confirmation from the request body
+ * - validates that all required fields are valid strings
+ * - extracts the authenticated user's ID from the token
+ * - calls the profile service responsible for validating the current password
+ *   and updating the user's password
+ * - returns an error if the update operation fails
+ * - returns a success message if the password is updated successfully
+ *
+ * Proper HTTP responses are returned for authentication failures,
+ * validation errors, incorrect passwords, successful updates,
+ * and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requireAuth } from "@/lib/authz"

@@ -1,3 +1,40 @@
+/**
+ * Secure reset password token generation and validation.
+ *
+ * This module implements a custom password reset token mechanism
+ * using HMAC signatures to ensure integrity and prevent tampering.
+ *
+ * The token contains a payload with:
+ * - userId
+ * - email
+ * - expiration timestamp (exp)
+ *
+ * The payload is Base64URL encoded and signed using an HMAC SHA-256
+ * signature derived from:
+ *   RESET_PASSWORD_SECRET + user's password hash.
+ *
+ * This design provides additional security because:
+ * - the token automatically becomes invalid if the user's password changes
+ * - the payload cannot be modified without breaking the signature
+ * - expiration is enforced during verification
+ *
+ * Main functions:
+ *
+ * - createResetPasswordToken:
+ *   Generates a signed token containing the user identifier,
+ *   email, and expiration timestamp.
+ *
+ * - verifyResetPasswordToken:
+ *   Validates the token by checking:
+ *   • token format
+ *   • signature integrity (using timing-safe comparison)
+ *   • payload structure
+ *   • expiration time
+ *
+ * If valid, the decoded payload is returned. Otherwise, a specific
+ * failure reason is provided (invalid format, signature, payload, or expiration).
+ */
+
 import crypto from "crypto"
 
 type ResetPasswordPayload = {

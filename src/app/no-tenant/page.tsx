@@ -1,3 +1,20 @@
+/**
+ * Displays a message when the authenticated user is not linked to any tenant.
+ *
+ * This client-side page informs the user that although their account is
+ * successfully authenticated, it is not associated with any company (tenant)
+ * in the system.
+ *
+ * The component:
+ * - retrieves the current session using NextAuth's useSession hook
+ * - shows the authenticated user's email if available
+ * - explains that the account must be linked to a tenant by an administrator
+ * - provides a button to sign out and return to the login page
+ *
+ * This page helps guide users who are authenticated but do not yet have
+ * access to any tenant within the platform.
+ */
+
 "use client"
 
 import { signOut, useSession } from "next-auth/react"

@@ -1,3 +1,25 @@
+/**
+ * Tenant selection page for authenticated users.
+ *
+ * This client-side page allows authenticated users to view and select
+ * one of the tenants (workspaces/companies) they have access to.
+ *
+ * The component:
+ * - retrieves the current authentication session with NextAuth
+ * - redirects unauthenticated users to the login page
+ * - fetches the list of available tenants from the API
+ * - displays loading, error, and empty states when needed
+ * - lets the user select a tenant and sends the selection to the backend
+ * - updates the current session with the selected tenant context
+ *   (tenantId, tenantName, permissions, and roles)
+ * - redirects the user to the dashboard after a successful selection
+ * - allows the user to sign out and return to the login page
+ * - includes a language switcher for localized navigation
+ *
+ * This page is responsible for establishing the active tenant context
+ * before the user enters the main application.
+ */
+
 "use client"
 
 import { useEffect, useState } from "react"

@@ -1,3 +1,24 @@
+/**
+ * Tenant user management page for administrators.
+ *
+ * This client-side dashboard page allows users with the "users.manage"
+ * permission to manage tenant members and their roles.
+ *
+ * The component:
+ * - protects the page using PermissionGuard
+ * - loads the current tenant user list from the admin API
+ * - displays loading, error, and empty states
+ * - allows administrators to add an existing user to the tenant by email
+ *   and assign an initial role
+ * - allows changing a user's role between "Admin" and "User"
+ * - allows removing a user from the tenant with confirmation
+ * - shows toast notifications for success, warning, and error feedback
+ * - provides a fallback access denied screen for unauthorized users
+ *
+ * The page is responsible for tenant-level user administration,
+ * including membership management, role updates, and removal actions.
+ */
+
 "use client"
 
 import Link from "next/link"

@@ -1,3 +1,16 @@
+/* Global client-side providers wrapper.
+*
+* This component wraps the application with the main context providers
+* used across the app:
+*
+* - SessionProvider: manages user authentication session (NextAuth).
+* - LangProvider: provides global language and localization support.
+* - ToastProvider: handles UI notifications and toast messages.
+*
+* The "use client" directive is required because these providers rely on
+* React context and client-side state.
+*/
+
 "use client"
 
 import { ReactNode } from "react"

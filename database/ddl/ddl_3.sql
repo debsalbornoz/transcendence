@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 4 — Marketing, Audiências e Importação de Base
--- SQL Server | Reexecutável: cria apenas o que ainda não existe
+-- ft_transcendence | Module 4 — Marketing, Audiences and Data Import
+-- SQL Server | Re-runnable: creates only what does not yet exist
 --
--- Tabelas:
+-- Tables:
 --   mkt.Audiences
 --   mkt.AudienceContacts
 --   mkt.ImportJobs
@@ -11,7 +11,7 @@
 --   mkt.EmailValidationHistory
 --   mkt.CampaignAudiences
 --
--- Dependências (já devem existir):
+-- Dependencies:
 --   core.Tenants
 --   auth.Users
 --   mtrk.Contatos

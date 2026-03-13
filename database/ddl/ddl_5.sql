@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 6 — Landing Pages, Formulários e Leads (lead)
--- SQL Server | Reexecutável
+-- ft_transcendence | Module 6 — Landing Pages, Forms and Leads (lead)
+-- SQL Server | Re-runnable
 --
 -- Tabelas:
 --   lead.LandingPages
@@ -10,7 +10,7 @@
 --   lead.Leads
 --   lead.LeadFieldValues
 --
--- Dependências (devem existir):
+-- Dependencies:
 --   core.Tenants
 --   mtrk.Campanhas
 --   mtrk.Mensagens

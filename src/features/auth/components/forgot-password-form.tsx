@@ -1,3 +1,23 @@
+/**
+ * Forgot password form component.
+ *
+ * This client-side component allows users to request a password reset
+ * by providing their email address.
+ *
+ * The component:
+ * - collects the user's email and sends a request to the password
+ *   recovery API endpoint
+ * - displays loading, success, and error states
+ * - shows toast notifications for user feedback
+ * - optionally displays the generated reset link in development
+ *   environments to simplify local testing
+ * - allows copying the reset link to the clipboard
+ * - provides a direct link to open the reset page
+ * - includes a navigation link back to the login page
+ *
+ * This component is responsible for initiating the password
+ * recovery flow in the authentication system.
+ */
 "use client"
 
 import { useState } from "react"

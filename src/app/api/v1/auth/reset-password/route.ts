@@ -1,3 +1,23 @@
+/**
+ * Handles password reset confirmation.
+ *
+ * This POST route finalizes the password reset process using a
+ * previously generated recovery token.
+ *
+ * The route:
+ * - reads the reset token, new password, and password confirmation
+ *   from the request body
+ * - validates that all required fields are valid strings
+ * - calls the password recovery service to validate the token
+ *   and update the user's password
+ * - returns an error if the reset operation fails
+ * - returns a success message when the password is updated successfully
+ *
+ * Proper HTTP responses are returned for validation errors,
+ * invalid or expired tokens, service failures, successful resets,
+ * and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { resetPassword } from "@/services/auth/password-recovery"

@@ -1,3 +1,25 @@
+/**
+ * Reset password form component.
+ *
+ * This client-side component allows users to set a new password
+ * using a password reset token received via email.
+ *
+ * The component:
+ * - reads the reset token from the URL query parameters
+ * - validates the presence of the token before allowing the reset flow
+ * - collects the new password and confirmation from the user
+ * - validates password length and password confirmation
+ * - sends the reset request to the password reset API endpoint
+ * - displays toast notifications for validation errors, API errors,
+ *   successful password updates, and unexpected failures
+ * - redirects the user to the login page after a successful reset
+ * - shows a fallback UI when the reset token is missing or invalid
+ * - provides navigation links to request a new reset link or return to login
+ *
+ * This component is responsible for completing the password recovery
+ * process by validating the token and updating the user's password.
+ */
+
 "use client"
 
 import { useState } from "react"

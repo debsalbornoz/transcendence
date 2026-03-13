@@ -1,3 +1,27 @@
+/**
+ * Retrieves all active users linked to the current tenant, including their roles.
+ *
+ * This GET route requires the "users.manage" permission and returns a list of
+ * active tenant users for the authenticated tenant.
+ *
+ * The route:
+ * - validates whether the requester has permission to manage users
+ * - extracts the current tenant ID from the authentication token
+ * - fetches all active tenant-user relationships for that tenant
+ * - selects basic user information from the related Users table
+ * - retrieves role assignments for those users within the same tenant
+ * - builds a role map to match each user with their corresponding role
+ * - formats BigInt identifiers as strings before returning the response
+ *
+ * The response includes, for each tenant user:
+ * - tenant user metadata
+ * - basic user details
+ * - the assigned role, if available
+ *
+ * Proper HTTP responses are returned for permission failures,
+ * successful retrieval, and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requirePermission } from "@/lib/authz"

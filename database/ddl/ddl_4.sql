@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 3 — Tracking e Métricas Brutas (mtrk)
--- SQL Server | Reexecutável
+-- ft_transcendence | Module 3 — Tracking and Metrics (mtrk)
+-- SQL Server | Re-runnable
 --
 -- Tabelas:
 --   mtrk.Contatos

@@ -1,3 +1,19 @@
+/**
+ * Retrieves the list of tenants associated with the authenticated user.
+ *
+ * This GET route requires authentication and returns all tenants that
+ * the current user belongs to.
+ *
+ * The route:
+ * - verifies that the request is authenticated using requireAuth
+ * - extracts the user ID from the authentication token
+ * - retrieves all tenants linked to that user through the RBAC service
+ * - returns the tenant list in the response
+ *
+ * Proper HTTP responses are returned for authentication failures,
+ * successful retrieval of tenants, and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requireAuth } from "@/lib/authz"

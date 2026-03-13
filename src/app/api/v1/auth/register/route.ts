@@ -1,3 +1,21 @@
+/**
+ * Handles user registration.
+ *
+ * This POST route creates a new user account based on the provided
+ * name, email, and password.
+ *
+ * The route:
+ * - reads the registration data from the request body
+ * - validates that name, email, and password are valid strings
+ * - calls the registration service responsible for creating the user
+ * - returns an error if the registration fails
+ * - returns the created user's basic information on success
+ *
+ * The response includes the new user's ID, name, email, and status.
+ * Proper HTTP responses are returned for validation errors,
+ * registration failures, successful creation, and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { registerUser } from "@/services/auth/register"

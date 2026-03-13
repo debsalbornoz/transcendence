@@ -1,3 +1,29 @@
+/**
+ * Selects a tenant and retrieves the authenticated user's access context.
+ *
+ * This POST route allows an authenticated user to select a tenant they
+ * belong to and retrieves the authorization data associated with that tenant.
+ *
+ * The route:
+ * - verifies that the request is authenticated using requireAuth
+ * - reads the tenantId from the request body
+ * - validates the tenantId format
+ * - checks whether the user has access to the requested tenant
+ * - retrieves the user's permissions within the tenant
+ * - retrieves the user's roles within the tenant
+ * - fetches the tenant's name
+ *
+ * The response includes:
+ * - tenantId
+ * - tenantName
+ * - the list of permissions granted to the user
+ * - the list of roles assigned to the user in that tenant
+ *
+ * Proper HTTP responses are returned for authentication failures,
+ * invalid input, forbidden tenant access, successful tenant selection,
+ * and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requireAuth } from "@/lib/authz"

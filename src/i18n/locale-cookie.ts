@@ -1,5 +1,5 @@
 // src/i18n/locale-cookie.ts
-import type { Locale } from "@/app/context/LangContext"
+import type { Locale } from "@/context/lang-context"
 
 export const LOCALE_COOKIE_NAME = "NEXT_LOCALE"
 export const DEFAULT_LOCALE: Locale = "pt"
@@ -8,10 +8,6 @@ export function isLocale(value: string | undefined): value is Locale {
   return value === "pt" || value === "en" || value === "es"
 }
 
-/**
- * Parse a cookie string and return the value for a given cookie name.
- * Works even when Next's cookies() shape differs across runtimes.
- */
 export function readCookieValue(cookieHeader: string, name: string): string | undefined {
   // cookieHeader example: "a=1; NEXT_LOCALE=pt; b=2"
   const parts = cookieHeader.split(";").map((p) => p.trim())

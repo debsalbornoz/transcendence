@@ -1,3 +1,22 @@
+/**
+ * Handles password reset requests.
+ *
+ * This POST route receives a user's email address and initiates the
+ * password recovery process.
+ *
+ * The route:
+ * - reads the email from the request body
+ * - validates that the email is a valid string
+ * - calls the password recovery service to generate a reset request
+ * - returns an error if the operation fails
+ * - returns a success message when the request is accepted
+ *
+ * In non-production environments, the reset URL is included in the
+ * response to simplify local testing and development.
+ *
+ * Proper HTTP responses are returned for validation errors,
+ * service failures, successful requests, and unexpected server errors.
+ */
 import { NextResponse } from "next/server"
 
 import { requestPasswordReset } from "@/services/auth/password-recovery"

@@ -1,3 +1,24 @@
+/**
+ * Main dashboard page for the authenticated user.
+ *
+ * This client-side page displays an overview of the current workspace
+ * and provides quick access to the main areas of the application.
+ *
+ * The component:
+ * - retrieves the current session using NextAuth's useSession hook
+ * - shows a loading state while the session is being resolved
+ * - displays a personalized greeting using the user's name or email
+ * - shows the active tenant/workspace name from the session
+ * - renders quick access cards for profile management, tenant switching,
+ *   and user management
+ * - conditionally displays the user management shortcut only for users
+ *   with the "users.manage" permission
+ * - shows simple session and workspace summary cards
+ *
+ * This page acts as the main entry point of the dashboard experience
+ * after the user selects or enters a workspace.
+ */
+
 "use client"
 
 import Link from "next/link"

@@ -1,3 +1,23 @@
+/**
+ * Updates a user's role within the current tenant.
+ *
+ * This PATCH route validates whether the authenticated user has the
+ * "users.manage" permission before allowing any role changes.
+ *
+ * The route:
+ * - reads the target user ID from the route params
+ * - reads the desired role name from the request body
+ * - validates the input values
+ * - ensures the target user is actively linked to the current tenant
+ * - retrieves the user's current role
+ * - finds the target role by name inside the same tenant
+ * - avoids unnecessary updates if the user already has that role
+ * - replaces the old role with the new one when needed
+ *
+ * It returns proper HTTP responses for validation errors, permission issues,
+ * missing tenant links, missing roles, successful updates, and unexpected failures.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requirePermission } from "@/lib/authz"

@@ -1,3 +1,44 @@
+/**
+ * Authenticated user profile service.
+ *
+ * This module contains the business logic for managing the profile
+ * of the currently authenticated user.
+ *
+ * It supports the following operations:
+ *
+ * - getMyProfile:
+ *   Retrieves the user's profile information and returns a safe
+ *   response with user_id, name, email, and status.
+ *
+ * - updateMyProfile:
+ *   Updates the user's display name after validating that the
+ *   provided name is not empty.
+ *
+ * - updateMyEmail:
+ *   Updates the user's email address after:
+ *   • normalizing the email
+ *   • validating the email format
+ *   • ensuring the new email is different from the current one
+ *   • checking that no other account already uses the same email
+ *
+ * - updateMyPassword:
+ *   Updates the user's password after:
+ *   • verifying that the account has a local password hash
+ *   • validating the current password
+ *   • validating the new password length
+ *   • confirming the new password matches the confirmation field
+ *   • ensuring the new password is different from the current password
+ *   • hashing the new password with bcrypt before saving it
+ *
+ * - deleteMyProfile:
+ *   Permanently deletes the user's account and related records,
+ *   including role assignments and tenant links, using a database
+ *   transaction to ensure consistency.
+ *
+ * This service centralizes authenticated profile management and
+ * account security operations for the application.
+ */
+
 import bcrypt from "bcryptjs"
 
 import {

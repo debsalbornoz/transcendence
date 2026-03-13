@@ -1,3 +1,44 @@
+/**
+ * RBAC and tenant access service.
+ *
+ * This module provides higher-level business logic for user identity,
+ * tenant membership, roles, and permissions in the multi-tenant system.
+ * It acts as a service layer between the API/authentication logic
+ * and the repository layer.
+ *
+ * The functions include:
+ *
+ * - getUserByEmail:
+ *   Retrieves a user from the database by email.
+ *
+ * - ensureUserForOAuth:
+ *   Ensures that a user authenticated via OAuth (Google/GitHub)
+ *   exists in the database. If the user already exists, their name
+ *   may be updated. Otherwise, a new OAuth user record is created.
+ *
+ * - getTenantsForUser:
+ *   Retrieves all tenants (workspaces/companies) associated with
+ *   a user and returns a simplified tenant structure.
+ *
+ * - userHasAccessToTenant:
+ *   Verifies whether a user has an active association with a
+ *   specific tenant.
+ *
+ * - getRolesForUserInTenant:
+ *   Retrieves all roles assigned to a user within a tenant.
+ *
+ * - getPermissionsForUser:
+ *   Aggregates all permissions granted to a user through their
+ *   assigned roles within a tenant.
+ *
+ * - getTenantNameById:
+ *   Retrieves the tenant name using the tenant identifier.
+ *
+ * This service is responsible for orchestrating tenant access
+ * control and RBAC logic used by authentication, session
+ * initialization, and authorization checks across the application.
+ */
+
 import {
   createOAuthUser,
   findUserByEmail,

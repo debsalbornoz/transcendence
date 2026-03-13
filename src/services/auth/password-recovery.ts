@@ -1,3 +1,38 @@
+/**
+ * Password reset service.
+ *
+ * This module implements the complete password reset workflow for
+ * credentials-based users.
+ *
+ * It supports two main operations:
+ *
+ * - requestPasswordReset:
+ *   Handles the initial password reset request by:
+ *   • normalizing the email address
+ *   • checking if the user exists and is eligible for password reset
+ *   • generating a secure reset token
+ *   • returning a reset URL containing the token
+ *
+ *   For security reasons, the response message is always the same
+ *   regardless of whether the account exists, preventing email
+ *   enumeration attacks.
+ *
+ * - resetPassword:
+ *   Handles the password reset process by:
+ *   • validating the reset token format
+ *   • verifying token integrity and expiration
+ *   • confirming the token belongs to the correct user
+ *   • validating the new password and confirmation
+ *   • hashing the new password using bcrypt
+ *   • updating the user's stored password hash in the database
+ *
+ * The reset token is validated using the custom token mechanism
+ * implemented in the reset-password-token module.
+ *
+ * This service ensures secure password recovery while protecting
+ * against token tampering, expiration misuse, and user enumeration.
+ */
+
 import bcrypt from "bcryptjs"
 
 import {

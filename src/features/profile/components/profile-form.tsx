@@ -1,3 +1,29 @@
+
+/**
+ * User profile management form.
+ *
+ * This client-side component allows the authenticated user to view and manage
+ * their personal account information, security settings, and profile actions.
+ *
+ * The component:
+ * - loads the current user's profile data from the profile API
+ * - displays account details such as name, email, user ID, status,
+ *   active company, and current role
+ * - allows editing and saving the user's name
+ * - allows editing the user's email with an additional confirmation modal
+ * - allows changing the user's password by providing the current password,
+ *   a new password, and confirmation
+ * - allows permanently deleting the user's profile through a danger-zone
+ *   confirmation flow
+ * - updates the active session after successful name or email changes
+ * - shows toast notifications for success, validation, API errors,
+ *   and unexpected failures
+ * - signs the user out after successful account deletion
+ *
+ * The component also includes reusable internal UI helpers for section headers,
+ * info cards, editable field cards, and static field cards.
+ */
+
 "use client"
 
 import { useEffect, useMemo, useState } from "react"

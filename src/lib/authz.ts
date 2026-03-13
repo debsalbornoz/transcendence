@@ -1,3 +1,40 @@
+/**
+ * Authorization helpers for protecting API routes.
+ *
+ * This module provides utility functions to validate authentication,
+ * tenant context, roles, and permissions based on the JWT token
+ * issued by NextAuth.
+ *
+ * The functions extract the token from the request and enforce
+ * different authorization levels:
+ *
+ * - requireAuth:
+ *   Ensures the request is authenticated by validating the JWT token
+ *   and confirming the presence of a userId.
+ *
+ * - requireTenant:
+ *   Ensures the authenticated user has an active tenant selected.
+ *   Used for multi-tenant routes that require tenant context.
+ *
+ * - requirePermission:
+ *   Ensures the authenticated user has a specific permission within
+ *   the active tenant.
+ *
+ * - requireAnyPermission:
+ *   Ensures the user has at least one permission from a list of allowed
+ *   permissions.
+ *
+ * - requireRole:
+ *   Ensures the user has a specific role within the active tenant.
+ *
+ * Each function returns either:
+ * - a successful authorization result containing the token data
+ * - a standardized HTTP response (401 or 403) when authorization fails
+ *
+ * These helpers centralize access control logic and are designed to be
+ * reused across API route handlers.
+ */
+
 import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 

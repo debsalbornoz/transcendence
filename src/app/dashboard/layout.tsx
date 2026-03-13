@@ -1,3 +1,20 @@
+/**
+ * Dashboard layout wrapper.
+ *
+ * This server-side layout defines the common structure used across
+ * all dashboard pages in the application.
+ *
+ * The layout:
+ * - retrieves the authenticated session using NextAuth
+ * - extracts the current tenant name from the session
+ * - renders the TopBar with the active tenant context
+ * - provides a language switcher for changing the application locale
+ * - wraps all dashboard pages inside a centered container layout
+ *
+ * It ensures a consistent UI structure for all routes inside the
+ * dashboard section of the application.
+ */
+
 import { ReactNode } from "react"
 import { getServerSession } from "next-auth"
 

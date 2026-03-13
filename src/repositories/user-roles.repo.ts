@@ -1,3 +1,39 @@
+/**
+ * Role and permission data access helpers for tenant-based RBAC.
+ *
+ * This module contains Prisma queries used to manage roles assigned
+ * to users within a tenant (workspace/company). It supports the RBAC
+ * (Role-Based Access Control) layer of the application.
+ *
+ * The functions include:
+ *
+ * - findRolesForUserInTenant:
+ *   Retrieves all roles assigned to a user within a specific tenant,
+ *   including the role metadata and associated permissions.
+ *
+ * - findRoleByNameInTenant:
+ *   Finds a role inside a tenant by its name. Used when assigning roles
+ *   such as "Admin" or "User".
+ *
+ * - findUserRoleInTenant:
+ *   Retrieves the role currently assigned to a user within a tenant,
+ *   including the role name.
+ *
+ * - createUserRole:
+ *   Assigns a role to a user within a tenant.
+ *
+ * - replaceUserRoleInTenant:
+ *   Replaces an existing role with another role for the same user
+ *   inside a tenant using a database transaction to ensure consistency.
+ *
+ * - deleteUserRolesInTenant:
+ *   Removes all roles assigned to a user within a tenant.
+ *
+ * These helpers centralize role management logic for the multi-tenant
+ * RBAC system and are used by authentication and administrative
+ * services.
+ */
+
 import { prisma } from "@/lib/prisma"
 
 export async function findRolesForUserInTenant(params: {

@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 8 — Analytics (camada rápida para dashboards)
--- SQL Server | Reexecutável
+-- ft_transcendence | Module 8 — Analytics
+-- SQL Server | Re-runnable
 --
--- Tabela:
+-- Table:
 --   analytics.DailyCampaignMetrics
 --
--- Dependências (devem existir):
+-- Dependencies:
 --   core.Tenants
 --   mtrk.Campanhas
 -----------------------------------------------------------------------

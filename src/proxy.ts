@@ -1,3 +1,39 @@
+/**
+ * Route access control middleware for authentication and tenant context.
+ *
+ * This middleware intercepts requests to protected application routes
+ * and redirects users based on their authentication state and tenant context.
+ *
+ * The logic handles four main scenarios:
+ *
+ * - Unauthenticated users:
+ *   Users who are not logged in are redirected to the login page
+ *   when trying to access protected routes such as the home page,
+ *   dashboard, tenant selection, or no-tenant page.
+ *
+ * - Authenticated users without any tenant:
+ *   Users who are logged in but do not belong to any tenant are
+ *   redirected to the "/no-tenant" page.
+ *
+ * - Authenticated users who must choose a tenant:
+ *   Users who belong to multiple tenants and still need to select
+ *   an active tenant are redirected to the "/select-tenant" page.
+ *
+ * - Authenticated users with an active tenant:
+ *   Users who already have a valid tenant context are redirected
+ *   away from public auth pages (such as login and register)
+ *   to the dashboard.
+ *
+ * Additional behavior:
+ * - The home route ("/") redirects authenticated users with an
+ *   active tenant directly to the dashboard.
+ * - The "/select-tenant" route remains accessible even when a user
+ *   already has an active tenant, allowing workspace switching.
+ *
+ * The matcher configuration ensures that this middleware only runs
+ * on relevant authentication, dashboard, and tenant-related routes.
+ */
+
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { getToken } from "next-auth/jwt"

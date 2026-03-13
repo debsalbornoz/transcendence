@@ -1,3 +1,44 @@
+/**
+ * NextAuth configuration for authentication and tenant-aware session management.
+ *
+ * This file defines the authentication providers, session strategy,
+ * and authentication callbacks used across the application.
+ *
+ * The configuration:
+ * - enables Google, GitHub, and Credentials authentication providers
+ * - authenticates email/password users through a custom credentials service
+ * - ensures OAuth users exist in the database before completing sign-in
+ * - uses JWT-based sessions to store authentication and tenant context
+ *
+ * The callbacks handle:
+ * - signIn:
+ *   Ensures users authenticated through Google or GitHub are created
+ *   or synchronized in the database.
+ *
+ * - jwt:
+ *   Enriches the token with application-specific data such as:
+ *   • userId
+ *   • tenantId
+ *   • tenantName
+ *   • permissions
+ *   • roles
+ *   • needsTenantSelection
+ *
+ *   It also determines whether the user:
+ *   - belongs to exactly one tenant and can enter it directly
+ *   - belongs to multiple tenants and must choose one
+ *   - does not belong to any tenant
+ *
+ *   In addition, it supports session updates triggered from the client,
+ *   allowing tenant context and authorization data to be refreshed.
+ *
+ * - session:
+ *   Maps the custom JWT fields into the session object so they are
+ *   available on the client side through NextAuth session hooks.
+ *
+ * This configuration is responsible for authentication, user provisioning,
+ * and tenant-based authorization context throughout the application.
+ */
 import { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import GitHubProvider from "next-auth/providers/github"

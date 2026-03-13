@@ -1,3 +1,30 @@
+/**
+ * Handles authenticated user profile operations.
+ *
+ * This route provides endpoints for retrieving, updating, and deleting
+ * the profile of the currently authenticated user.
+ *
+ * All operations require authentication via `requireAuth`.
+ *
+ * GET:
+ * - Retrieves the authenticated user's profile information.
+ * - Returns the user's basic data if found.
+ *
+ * PATCH:
+ * - Updates the authenticated user's profile.
+ * - Supports two update modes:
+ *   • updating the user's name
+ *   • updating the user's email
+ * - Validates the request body and ensures only one field is updated per request.
+ *
+ * DELETE:
+ * - Deletes the authenticated user's profile.
+ * - Calls the profile service responsible for handling account removal.
+ *
+ * Proper HTTP responses are returned for authentication failures,
+ * validation errors, successful operations, and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requireAuth } from "@/lib/authz"

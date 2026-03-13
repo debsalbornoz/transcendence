@@ -1,13 +1,13 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 5 — Operação de Envio e Governança (ops)
--- SQL Server | Reexecutável
+-- ft_transcendence | Module 5 — Sending Operations and Governance (ops)
+-- SQL Server | Re-runnable
 --
--- Tabelas:
+-- Tables:
 --   ops.SendingProviders
 --   ops.SendingIdentities
 --   ops.SuppressionList
 --
--- Dependências (devem existir):
+-- Dependencies:
 --   core.Tenants
 -----------------------------------------------------------------------
 

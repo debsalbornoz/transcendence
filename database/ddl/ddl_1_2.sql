@@ -1,12 +1,13 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 1 (Núcleo Multi-Tenant) + Módulo 2 (Auth/RBAC)
--- SQL Server | Reexecutável: cria apenas o que ainda não existe
--- Contém: core.Tenants + auth.* (Users, TenantUsers, Roles, Permissions, RolePermissions, UserRoles)
+-- ft_transcendence | Module 1 (Multi-Tenant Core) + Module 2 (Auth/RBAC)
+-- SQL Server | Re-runnable: creates only what does not yet exist
+-- Contains: core.Tenants + auth.* (Users, TenantUsers, Roles, Permissions, RolePermissions, UserRoles)
 -----------------------------------------------------------------------
 
 -----------------------------------------------------------------------
 -- Schemas
 -----------------------------------------------------------------------
+
 IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = N'core')
 BEGIN
     EXEC('CREATE SCHEMA core');
@@ -20,7 +21,7 @@ END;
 GO
 
 -----------------------------------------------------------------------
--- MÓDULO 1 — core.Tenants
+-- MODULE 1 — core.Tenants
 -----------------------------------------------------------------------
 IF OBJECT_ID('core.Tenants', 'U') IS NULL
 BEGIN
@@ -41,7 +42,7 @@ END;
 GO
 
 -----------------------------------------------------------------------
--- MÓDULO 2 — AUTH / Associação ao Tenant / RBAC
+-- MODULE 2 — AUTH / Tenant / RBAC
 -----------------------------------------------------------------------
 
 -- auth.Users

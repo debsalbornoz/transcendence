@@ -1,3 +1,27 @@
+/**
+ * Adds an existing user to the current tenant and assigns a role.
+ *
+ * This POST route requires the "users.manage" permission and is responsible
+ * for linking an already existing active user to the authenticated tenant.
+ *
+ * The route:
+ * - reads the user's email and desired role from the request body
+ * - validates the required input fields
+ * - ensures the role name is either "Admin" or "User"
+ * - finds the user by email
+ * - checks whether the user exists and is active
+ * - finds the requested role inside the current tenant
+ * - creates the tenant-user link if it does not already exist
+ * - checks whether the user already has a role in the tenant
+ * - creates the role assignment if none exists
+ * - returns an unchanged response if the same role is already assigned
+ * - replaces the existing role if a different one is currently assigned
+ *
+ * Proper HTTP responses are returned for permission errors, invalid input,
+ * missing users, inactive users, missing roles, successful assignments,
+ * unchanged states, and unexpected server failures.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requirePermission } from "@/lib/authz"

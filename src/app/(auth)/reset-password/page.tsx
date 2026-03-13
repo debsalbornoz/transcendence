@@ -6,7 +6,6 @@
  * token handling, validation, and password update logic to the
  * ResetPasswordForm component.
  *
-
  */
 
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form"

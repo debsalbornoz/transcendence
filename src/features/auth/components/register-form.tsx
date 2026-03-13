@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -8,7 +9,25 @@ import { useTranslations } from "next-intl"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AuthInput } from "@/components/ui/auth-input"
-import { useToast } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/toast"/**
+* Registration form component.
+*
+* This client-side component allows new users to create an account
+* by providing their name, email, password, and password confirmation.
+*
+* The component:
+* - manages form state for all registration fields
+* - validates required inputs before submitting
+* - checks password length and password confirmation
+* - sends a registration request to the authentication API
+* - displays toast notifications for validation errors, API errors,
+*   successful account creation, and unexpected failures
+* - redirects the user to the login page after a successful registration
+* - provides a navigation link for users who already have an account
+*
+* This component is responsible for handling the user sign-up flow
+* and guiding the user to the next step after account creation.
+*/
 
 export function RegisterForm() {
   const t = useTranslations("register")

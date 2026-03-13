@@ -1,3 +1,24 @@
+/**
+ * Removes a user from the current tenant.
+ *
+ * This DELETE route allows administrators with the "users.manage" permission
+ * to remove a user from the active tenant.
+ *
+ * The route performs several validations before executing the operation:
+ * - Verifies that the requester has the required permission.
+ * - Extracts and validates the target userId from the route parameters.
+ * - Prevents users from removing themselves from the active tenant.
+ * - Ensures the target user is currently linked to the tenant.
+ *
+ * If the validations pass, the route:
+ * - Deletes all role assignments for the user within the tenant.
+ * - Removes the user's association with the tenant.
+ *
+ * Proper HTTP responses are returned for validation errors,
+ * permission failures, missing tenant relationships,
+ * successful removal, and unexpected server errors.
+ */
+
 import { NextResponse } from "next/server"
 
 import { requirePermission } from "@/lib/authz"

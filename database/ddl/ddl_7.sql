@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------
--- ft_transcendence | Módulo 7 — Auditoria (audit)
--- SQL Server | Reexecutável
+-- ft_transcendence | Módulo 7 — Audit
+-- SQL Server | Re-runnable
 --
--- Tabela:
+-- Table:
 --   audit.AuditLogs
 --
--- Dependências (devem existir):
+-- Dependencies:
 --   core.Tenants
 --   auth.Users
 -----------------------------------------------------------------------
