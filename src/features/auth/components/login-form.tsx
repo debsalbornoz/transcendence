@@ -218,6 +218,15 @@ export function LoginForm() {
             {t("registerLink")}
           </Link>
         </div>
+	<div className="mt-4 flex justify-center gap-4 text-xs text-gray-500">
+          <Link href="/terms" className="hover:text-gray-400 transition-colors">
+            {t("termsLink")}
+          </Link>
+          <span>|</span>
+          <Link href="/privacy" className="hover:text-gray-400 transition-colors">
+            {t("privacyLink")}
+          </Link>
+        </div>
       </div>
     </Card>
   )

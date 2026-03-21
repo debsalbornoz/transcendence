@@ -8,5 +8,7 @@
   "orContinueWith": "ou continue com",
   "registerPrompt": "Ainda não tem uma conta?",
   "registerLink": "Criar conta",
-  "invalidCredentials": "Email ou senha inválidos"
+  "invalidCredentials": "Email ou senha inválidos",
+  "termsLink": "Termos de Uso",
+  "privacyLink": "Privacidade"
 }

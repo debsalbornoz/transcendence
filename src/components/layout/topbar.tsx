@@ -111,7 +111,7 @@ export function TopBar({ tenantName }: TopBarProps) {
               </button>
 
               {open && (
-                <div className="absolute right-0 top-full mt-3 w-[280px] overflow-hidden rounded-3xl border border-white/10 bg-[#0E1325]/98 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl">
+                <div className="absolute right-0 top-full mt-3 w-[280px] overflow-hidden rounded-3xl border border-white/10 bg-[#0E1325]/95 shadow-[0_20px_80px_rgba(0,0,0,0.6)] backdrop-blur-xl z-50">
                   <div className="border-b border-white/10 px-5 py-4">
                     <p className="truncate text-base font-semibold text-white">
                       {userName}

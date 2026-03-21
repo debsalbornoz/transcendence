@@ -27,6 +27,8 @@ export async function getMessages(locale: Locale) {
     selectTenant,
     dashboardUsers,
     profile,
+    terms,
+    privacy,
   ] = await Promise.all([
     import(`@/locales/${locale}/login.json`).then((m) => m.default),
     import(`@/locales/${locale}/register.json`).then((m) => m.default),
@@ -35,6 +37,8 @@ export async function getMessages(locale: Locale) {
     import(`@/locales/${locale}/select-tenant.json`).then((m) => m.default),
     import(`@/locales/${locale}/dashboard-users.json`).then((m) => m.default),
     import(`@/locales/${locale}/profile.json`).then((m) => m.default),
+    import(`@/locales/${locale}/terms.json`).then((m) => m.default),
+    import(`@/locales/${locale}/privacy.json`).then((m) => m.default),
   ])
 
   return {
@@ -45,5 +49,7 @@ export async function getMessages(locale: Locale) {
     selectTenant,
     dashboardUsers,
     profile,
+    terms,
+    privacy,
   } as const
 }
